@@ -67,7 +67,7 @@ options(digits = 6)
 ```
 
 
-# 2. Import data
+# 2. import data
 
 ```{r, collapse=TRUE, warning=FALSE,  message=FALSE}
 
@@ -105,7 +105,7 @@ dat <- dat_join %>%
 
 ```
 
-# plot data
+# 4. plot data
 
 ```{r, collapse=TRUE, warning=FALSE,  message=FALSE}
 # , results="asis"
@@ -137,7 +137,7 @@ p <-ggplot(dat_plot, aes(hour_of_day, values)) +
   scale_x_continuous(breaks= dat_plot$hour_of_day) +
   labs(title=paste0(description_sel[i]),
   #labs(title=paste0(description_sel[i], "\n", url_sel) ,
-       subtitle = "Popularity for any given hour is shown relative to the typical peak popularity for the business for the week",
+       subtitle = "Popularity for given hour is shown relative to typical peak popularity for business for week",
         x ="time",
         y = "")+
   theme(
