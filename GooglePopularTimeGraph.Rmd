@@ -1,0 +1,170 @@
+---
+title: "GooglePopularTimeGraph"
+author: "Katharina Kaelin"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+    theme: lumen
+    highlight: tango
+---
+
+<style type="text/css">
+.main-container {
+  max-width: 1800px;
+  margin-left: 0;
+  margin-right: auto;
+}
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: 14px;
+    border-left: 5px solid #eee;
+}
+
+h1.title {
+  font-size: 38px;
+  color: #000000;
+  }
+  
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: #0033cc;
+}
+
+h2 { /* Header 2 */
+    font-size: 28px;
+	color: #0099ff
+}
+
+h3 { /* Header 3 */
+    font-size: 14px;
+	color: #6600cc
+}
+</style>
+
+# 1. R setup
+
+```{r setup, echo=T, results='hide', message=FALSE, warning=FALSE}
+
+# Import libraries
+library(tidyverse) # collection of R packages designed for data science
+library(tidyr)
+library(plotly)
+
+# Number formatting
+options(scipen = 1000000)
+options(digits = 6)
+
+```
+
+
+# 2. Import data
+
+```{r, collapse=TRUE, warning=FALSE,  message=FALSE}
+
+urlfile1="https://storage.googleapis.com/kantonzh-covid-hkfsaqgshw/gmaps_scrape/all_valid.csv"
+dat1<-read_csv(url(urlfile1))
+
+urlfile2 = "https://docs.google.com/spreadsheets/d/1KDqquW2axaUM9Z62JbyppuPq09IpAZRSIpPLb08nVqQ/pub?output=csv"
+dat2 <-read_csv(urlfile2) %>% 
+  filter(description != "Flughafen Zürich")
+
+```
+
+# 3. prepare data
+
+```{r, collapse=TRUE, warning=FALSE,  message=FALSE}
+
+dat_join <- dat1 %>%
+  left_join(dat2, by = c("url" = "url")) 
+
+# check: should be equal
+## nrow(dat_join) == nrow(dat1)
+
+dat <- dat_join %>% 
+  filter(day_of_week == "Friday") %>% 
+  select(description, 
+         url, 
+         hour_of_day, 
+        'typical popularity over the last several weeks' = popularity_percent_normal, 
+         '20.03.2020' = popularity_percent_current) %>%
+  pivot_longer(
+    cols = c('20.03.2020', 'typical popularity over the last several weeks'),
+    names_to = "variable",
+    values_to = "values") %>%
+  arrange(hour_of_day)
+
+```
+
+# plot data
+
+```{r, collapse=TRUE, warning=FALSE,  message=FALSE}
+# , results="asis"
+
+ # create graphing function
+function.graph <- function(df){
+  
+# create looping variable
+description_sel <- unique(dat$description)
+
+# create for loop to produce ggplot2 graphs 
+for (i in 1:length(description_sel)) { 
+  
+dat_plot <-  dat %>%
+  filter(description == description_sel[i])
+
+url_sel <- dat2 %>% 
+  filter(description == description_sel[i]) %>%
+  select(url)
+
+#print(i)
+#print(paste0("3333333333333333"))
+#print(description_sel[i])
+#print(as.character(url_sel))
+#print(paste0("<a href='", url_sel, "'>", "link", "</a>"))
+
+p <-ggplot(dat_plot, aes(hour_of_day, values)) +
+  geom_col(stat = "identity", aes(fill = variable), position = "dodge") +
+  scale_x_continuous(breaks= dat_plot$hour_of_day) +
+  labs(title=paste0(description_sel[i], "\n", url_sel) ,
+       subtitle = "Popularity for any given hour is shown relative to the typical peak popularity for the business for the week",
+        x ="time",
+        y = "")+
+  theme(
+    plot.title = element_text(size=28, colour = "#0033cc"), 
+    axis.title.y=element_blank(),
+    axis.text.y=element_blank(),
+    axis.ticks.y=element_blank(),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    legend.title=element_blank(),
+    legend.position='top',
+    legend.justification='left',
+    legend.direction="vertical"
+  )+
+  scale_fill_manual(values=c("#E6B0AA", "#CCD1D1"))
+
+# print plots to screen
+print(p)
+
+}} 
+
+# run function.graph
+function.graph(dat)
+
+```
+
+
+
+
