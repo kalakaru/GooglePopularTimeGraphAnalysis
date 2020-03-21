@@ -135,7 +135,8 @@ url_sel <- dat2 %>%
 p <-ggplot(dat_plot, aes(hour_of_day, values)) +
   geom_col(stat = "identity", aes(fill = variable), position = "dodge") +
   scale_x_continuous(breaks= dat_plot$hour_of_day) +
-  labs(title=paste0(description_sel[i], "\n", url_sel) ,
+  labs(title=paste0(description_sel[i]),
+  #labs(title=paste0(description_sel[i], "\n", url_sel) ,
        subtitle = "Popularity for any given hour is shown relative to the typical peak popularity for the business for the week",
         x ="time",
         y = "")+
