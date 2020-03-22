@@ -90,6 +90,12 @@ dat_join <- dat1 %>%
 # check: should be equal
 ## nrow(dat_join) == nrow(dat1)
 
+```
+
+# 4. plot data: 20.03.2020
+
+```{r, collapse=TRUE, warning=FALSE,  message=FALSE}
+
 dat <- dat_join %>% 
   filter(day_of_week == "Friday") %>% 
   select(description, 
@@ -101,16 +107,10 @@ dat <- dat_join %>%
     cols = c('20.03.2020', 'typical popularity over the last several weeks'),
     names_to = "variable",
     values_to = "values") %>%
-  arrange(hour_of_day)
+  filter(!is.na(description)) %>%
+  arrange(description, hour_of_day)
 
-```
-
-# 4. plot data
-
-```{r, collapse=TRUE, warning=FALSE,  message=FALSE}
-# , results="asis"
-
- # create graphing function
+# create graphing function
 function.graph <- function(df){
   
 # create looping variable
@@ -137,7 +137,7 @@ p <-ggplot(dat_plot, aes(hour_of_day, values)) +
   scale_x_continuous(breaks= dat_plot$hour_of_day) +
   labs(title=paste0(description_sel[i]),
   #labs(title=paste0(description_sel[i], "\n", url_sel) ,
-       subtitle = "Popularity for given hour is shown relative to typical peak popularity for business for week",
+       subtitle = "Popularity for given hour is shown relative to typical peak popularity for location for week",
         x ="time",
         y = "")+
   theme(
@@ -166,6 +166,77 @@ function.graph(dat)
 
 ```
 
+# 4. plot data: 21.03.2020
 
+```{r, collapse=TRUE, warning=FALSE,  message=FALSE}
 
+dat <- dat_join %>% 
+  filter(day_of_week == "Saturday") %>% 
+  select(description, 
+         url, 
+         hour_of_day, 
+        'typical popularity over the last several weeks' = popularity_percent_normal, 
+         '21.03.2020' = popularity_percent_current) %>%
+  pivot_longer(
+    cols = c('21.03.2020', 'typical popularity over the last several weeks'),
+    names_to = "variable",
+    values_to = "values") %>%
+  filter(!is.na(description)) %>%
+  arrange(description, hour_of_day)
+
+# create graphing function
+function.graph <- function(df){
+  
+# create looping variable
+description_sel <- unique(dat$description)
+
+# create for loop to produce ggplot2 graphs 
+for (i in 1:length(description_sel)) { 
+  
+dat_plot <-  dat %>%
+  filter(description == description_sel[i])
+
+url_sel <- dat2 %>% 
+  filter(description == description_sel[i]) %>%
+  select(url)
+
+#print(i)
+#print(paste0("3333333333333333"))
+#print(description_sel[i])
+#print(as.character(url_sel))
+#print(paste0("<a href='", url_sel, "'>", "link", "</a>"))
+
+p <-ggplot(dat_plot, aes(hour_of_day, values)) +
+  geom_col(stat = "identity", aes(fill = variable), position = "dodge") +
+  scale_x_continuous(breaks= dat_plot$hour_of_day) +
+  labs(title=paste0(description_sel[i]),
+  #labs(title=paste0(description_sel[i], "\n", url_sel) ,
+       subtitle = "Popularity for given hour is shown relative to typical peak popularity for location for week",
+        x ="time",
+        y = "")+
+  theme(
+    plot.title = element_text(size=28, colour = "#0033cc"), 
+    axis.title.y=element_blank(),
+    axis.text.y=element_blank(),
+    axis.ticks.y=element_blank(),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    legend.title=element_blank(),
+    legend.position='top',
+    legend.justification='left',
+    legend.direction="vertical"
+  )+
+  scale_fill_manual(values=c("#E6B0AA", "#CCD1D1"))
+
+# print plots to screen
+print(p)
+
+}} 
+
+# run function.graph
+function.graph(dat)
+
+```
 
