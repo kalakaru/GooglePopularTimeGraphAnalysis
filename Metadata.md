@@ -13,11 +13,7 @@ As an example of how to use the data, [a python parser script](https://gist.gith
 # Important points to consier when analyzing the data
 - The wrong link for the airport Zürich (Kloten) was used until 21.03.2020 19oclock
 
-# Note
-
-This file does not follow the data structure specification. 
-
-# Methodology
+# How does Google calculate the Popular Time Graph?
 
 ## Google
 https://support.google.com/business/answer/6263531?hl=en <br>
@@ -37,12 +33,4 @@ https://support.google.com/business/answer/6263531?hl=en <br>
 https://www.linkedin.com/pulse/how-accurate-googles-popular-time-function-m%C3%A9lissa-sanchot/ <br>
 https://www.quora.com/How-does-the-Google-Maps-Popular-Times-feature-work <br>
 https://medium.com/@bossley.samuel/part-1-how-to-mimic-google-maps-popular-times-to-track-live-and-averaged-visit-data-using-amazon-2fc3cb589358
-
-# Visualization 
-https://observablehq.com/@mmznrstat/people-density
-
-# Challenge 
-Is it possible to make these data comparable over time, to get some idea of the development of foot traffic at these locations over the next few weeks. Solutions would be very welcome!
-
-
 
