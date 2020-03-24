@@ -54,7 +54,7 @@ h3 { /* Header 3 */
 Katharina Kaelin & [Philshem](https://twitter.com/philshem)
 
 **More information regarding methodology** <br>
-https://github.com/statistikZH/monitoring_covid19/blob/master/Mobility_GooglePopularTimeGraph.md
+https://github.com/kalakaru/GooglePopularTimeGraphAnalysis/blob/master/Metadata.md
 
 # 1. R setup
 
