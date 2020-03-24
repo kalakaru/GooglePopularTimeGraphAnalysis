@@ -1,5 +1,5 @@
 # GooglePopularTimeGraphAnalysis
-Visualization of the scraped data that is documented [here](https://github.com/statistikZH/monitoring_covid19/blob/master/Mobility_GooglePopularTimeGraph.md). <br>
+Visualization of the scraped data that is documented [here](https://github.com/kalakaru/GooglePopularTimeGraphAnalysis/blob/master/Metadata.md). <br>
 The R Markdown document is published as a [GitHub Page](https://kalakaru.github.io/GooglePopularTimeGraphAnalysis/).
 
 PS: Please let me know if you are aware of a more elegant solution to embed the ggplot graphics <br>
