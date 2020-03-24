@@ -1,6 +1,5 @@
 ---
 title: "GooglePopularTimeGraph"
-author: "Katharina Kaelin"
 knit: (function(input_file, encoding) {
   out_dir <- 'docs';
   rmarkdown::render(input_file,
@@ -50,6 +49,12 @@ h3 { /* Header 3 */
 	color: #6600cc
 }
 </style>
+
+**Authors** <br>
+Katharina Kaelin & [Philshem](https://twitter.com/philshem)
+
+**More information regarding methodology** <br>
+https://github.com/statistikZH/monitoring_covid19/blob/master/Mobility_GooglePopularTimeGraph.md
 
 # 1. R setup
 
