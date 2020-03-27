@@ -10,6 +10,9 @@ Data is scraped hourly based on [the code available here](https://github.com/phi
 
 As an example of how to use the data, [a python parser script](https://gist.github.com/philshem/a472314e62c987aee68fcd780bdde170) which gets recent hours and calculates the change in crowdedness as compared to usual.
 
+# More inforamtion about the scraper
+https://github.com/philshem/gmaps_popular_times_scraper
+
 # Important points to consier when analyzing the data
 - The wrong link for the airport Zürich (Kloten) was used until 21.03.2020 19oclock
 
